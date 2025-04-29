@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-# Author: Chen Mingkai
+# Author: KMC20
 # Date: 2024/7/28
 # Function: Estimate the performance of DRIM-ANN to avoid expensive index generation during DSE.
 
