@@ -2,7 +2,7 @@
 ## Framework
 Please refer to the `DRIM-ANN` directory. A README.md is attached to it for testing.
 ## Fine-grained performance model
-Please refer to the `Perfmodel` directory. A README.md is attached to it for testing.
+Please refer to the `Perf-Model` directory. A README.md is attached to it for testing.
 ## Reference
 If you feel this repo is useful for you, don't hesitate to star this!😀 And it is really kind of you to cite this repo in your paper or project.
 
