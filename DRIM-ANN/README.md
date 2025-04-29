@@ -13,7 +13,7 @@ mkdir -p ckpts/DEEP100M
 make run
 ```
 ## How to check the results
-Please refer to the Appendix of Artifact Description/Artifact Evaluation of the SC2025 article.
+Check the log and top-k neighbor files in the `build` and `ckpts` folders respectively. Please refer to the Appendix of Artifact Description/Artifact Evaluation of the SC2025 article for more details.
 ## Thanks
  * Library of priority queue. The implementations of priority queue in `dpu/libpqueue` in UPMEM_d and UPMEM_h are modified to suit the demands of UPMEM from the implementation here: https://github.com/vy/libpqueue
  * MSR fetching. The implementations of `rdmsr` and related functions in `host/measureEnergy.c` in UPMEM_d and UPMEM_h for energy measurement are modified from the implementation here: https://github.com/lixiaobai09/intel_power_consumption_get/blob/master/powerget.c
