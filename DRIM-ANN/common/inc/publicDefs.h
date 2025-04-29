@@ -1,5 +1,5 @@
 /*
-Author: Chen Mingkai
+Author: KMC20
 Date: 2022/7/9
 Function: Basic definitions of datum types.
 */
