@@ -1,5 +1,5 @@
 /*
-Author: Chen Mingkai
+Author: KMC20
 Date: 2024/3/10
 Function: Management including data transfer with DPU and for the query distribution to different MRAMs.
 */
