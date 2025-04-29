@@ -32,7 +32,8 @@ clean:
 ###
 ### HOST APPLICATION
 ###
-CXXFLAGS=-g -Wall -Werror -Wextra -O3 -std=c++11 `dpu-pkg-config --cflags dpu` -Ihost/tools/inc -Ihost/inc -Icommon/inc -mavx512bw -mavx512vl -mavx512f -mavx512cd -mavx512dq -mavx2 -mavx -msse2 -msse -DNR_TASKLETS=${NR_TASKLETS}
+CXXFLAGS=-g -Wall -Werror -Wextra -O3 -std=c++11 `dpu-pkg-config --cflags dpu` -Ihost/tools/inc -Ihost/inc -Icommon/inc -mavx2 -mavx -msse2 -msse -DNR_TASKLETS=${NR_TASKLETS}
+# CXXFLAGS=-g -Wall -Werror -Wextra -O3 -std=c++11 `dpu-pkg-config --cflags dpu` -Ihost/tools/inc -Ihost/inc -Icommon/inc -mavx512bw -mavx512vl -mavx512f -mavx512cd -mavx512dq -mavx2 -mavx -msse2 -msse -DNR_TASKLETS=${NR_TASKLETS}
 LDFLAGS=`dpu-pkg-config --libs dpu` -fopenmp
 
 ${HOST_BINARY}: ${HOST_SOURCES} ${HOST_HEADERS} ${COMMONS_HEADERS} ${DPU_BINARY_CBS}
