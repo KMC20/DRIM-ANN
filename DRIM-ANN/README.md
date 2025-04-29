@@ -6,7 +6,7 @@ To avoid dependency on faiss, this repo provides a version without faiss as well
 ## Index & query data
 1. Browse the cloud storage link: https://pan.baidu.com/s/17qbkuQC80EE0dE_SDdljrA
 2. Input the extracting code: cv43
-3. Download the whole data folder and move to the local folder.
+3. Download the whole data folder and move it to the local folder.
 ## How to test
 Make sure that index & query data have been downloaded and placed in this folder.
 ```
