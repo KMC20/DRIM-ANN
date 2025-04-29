@@ -852,7 +852,7 @@ static void allocated_and_compute(dpu::DpuSet &dpu_set, const uint32_t dimAmt, c
         endEnergy[nr_socket] = getEnergy(evalCPUIds[nr_socket]);
     for (uint32_t nr_socket = 0; nr_socket < nr_sockets; ++nr_socket)
         totalExecEnergy += (endEnergy[nr_socket] - startEnergy[nr_socket]) & MSR_ENERGY_MASK;
-    printf("[Host]  Total energy for IVFPQ searching: %.6lfJ\n", totalExecEnergy * ESU);
+    printf("[Host]  Total energy for query searching: %.6lfJ\n", totalExecEnergy * ESU);
 #endif
 #ifdef PERF_EVAL
     end = (long)timecheck.tv_sec * 1e6 + (long)timecheck.tv_usec;
