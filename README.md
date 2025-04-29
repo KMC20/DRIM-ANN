@@ -1,22 +1,8 @@
 # DRIM-ANN
-## How to test
-```
-unzip -q data.zip
-rm data.zip
-mkdir build
-mkdir -p ckpts/SIFT100M
-mkdir -p ckpts/DEEP100M
-make run
-```
-## How to check the results
-Please refer to the Appendix of Artifact Description/Artifact Evaluation of the SC2025 article.
-## Thanks
- * Library of priority queue. The implementations of priority queue in `dpu/libpqueue` in UPMEM_d and UPMEM_h are modified to suit the demands of UPMEM from the implementation here: https://github.com/vy/libpqueue
- * MSR fetching. The implementations of `rdmsr` and related functions in `host/measureEnergy.c` in UPMEM_d and UPMEM_h for energy measurement are modified from the implementation here: https://github.com/lixiaobai09/intel_power_consumption_get/blob/master/powerget.c
- * The basic directory structure of the repo is learned from the upmemGCiM project: https://github.com/KMC20/upmemGCiM
- * The faiss library: https://github.com/facebookresearch/faiss
- * SIFT dataset: http://corpus-texmex.irisa.fr
- * DEEP dataset: https://research.yandex.com/blog/benchmarks-for-billion-scale-similarity-search
+## Framework
+Please refer to the `DRIM-ANN` directory. A README.md is attached to it for testing.
+## Fine-grained performance model
+Please refer to the `Perfmodel` directory. A README.md is attached to it for testing.
 ## Reference
 If you feel this repo is useful for you, don't hesitate to star this!😀 And it is really kind of you to cite this repo in your paper or project.
 
