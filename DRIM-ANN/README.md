@@ -4,7 +4,7 @@
   
 To avoid dependency on faiss, this repo provides a version without faiss as well. You can try this by replacing the folder `host` by `hostNoFaiss`, and replacing `Makefile` by `Makefile.noFaiss`. This version supports hyperthreading and AVX2 by default, and you can change the use of `knn_L2sqr` into `knn_L2sqrAVX512` in `host/tools/src/tools.cpp` and the `CXXFLAGS` in `Makefile.noFaiss` into the annotated one if your machine supports AVX512. However, the implementation has not been deeply optimized, so it is 2~4 times slower than the faiss implementation, especially in cases that `nlist` is large.
 ## Index & query data
-1. Browse the link: https://pan.baidu.com/s/17qbkuQC80EE0dE_SDdljrA
+1. Browse the cloud storage link: https://pan.baidu.com/s/17qbkuQC80EE0dE_SDdljrA
 2. Input the extracting code: cv43
 3. Download the whole data folder and move to the local folder.
 ## How to test
