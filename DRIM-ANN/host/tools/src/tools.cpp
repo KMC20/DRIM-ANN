@@ -1,5 +1,5 @@
 /*
-Author: Chen Mingkai
+Author: KMC20
 Date: 2024/2/29
 Function: Auxiliary functions for distance calculation and top-k sorting of the host side.
 */
