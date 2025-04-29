@@ -1,7 +1,7 @@
 # DRIM-ANN
 ## Dependency
 * The faiss library: integrated to the cluster locating phase on CPU. Install by conda at: https://github.com/facebookresearch/faiss
-  To avoid dependency on faiss, this repo also provides a version without faiss. You can replace the folder `host` by `hostNoFaiss`, and replace `Makefile` by `Makefile.noFaiss`. This version supports hyperthreading and AVX2 by default, and you can change the use of `knn_L2sqr` into `knn_L2sqrAVX512` in `host/tools/src/tools.cpp` and the `CXXFLAGS` into the annotated one in `Makefile.noFaiss` if your machine supports AVX512. However, the implementation has not been deeply optimized, so it is 2~4 times slower than the faiss implementation, especially in cases that `nlist` is large.
+To avoid dependency on faiss, this repo also provides a version without faiss. You can replace the folder `host` by `hostNoFaiss`, and replace `Makefile` by `Makefile.noFaiss`. This version supports hyperthreading and AVX2 by default, and you can change the use of `knn_L2sqr` into `knn_L2sqrAVX512` in `host/tools/src/tools.cpp` and the `CXXFLAGS` into the annotated one in `Makefile.noFaiss` if your machine supports AVX512. However, the implementation has not been deeply optimized, so it is 2~4 times slower than the faiss implementation, especially in cases that `nlist` is large.
 ## How to test
 ```
 unzip -q data.zip
