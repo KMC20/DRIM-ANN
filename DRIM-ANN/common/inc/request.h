@@ -1,5 +1,5 @@
 /*
-Author: Chen Mingkai
+Author: KMC20
 Date: 2024/2/27
 Function: Public definitions for PIM-IVFPQ.
 */
