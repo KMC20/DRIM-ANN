@@ -5,7 +5,7 @@ A fine-grained performance model of DRIM-ANN to avoid expensive index generation
 bash model.sh
 ```
 ## How to check the results
-Please refer to the Appendix of Artifact Description/Artifact Evaluation of the SC2025 article.
+Check the generated excel files in the `result` folder. Please refer to the Appendix of Artifact Description/Artifact Evaluation of the SC2025 article for more details.
 ## Reference
 If you feel this repo is useful for you, don't hesitate to star this!😀 And it is really kind of you to cite this repo in your paper or project.
 
