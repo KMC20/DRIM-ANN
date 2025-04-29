@@ -894,9 +894,9 @@ static void allocated_and_compute(dpu::DpuSet &dpu_set, const uint32_t dimAmt, c
     start = (long)timecheck.tv_sec * 1e6 + (long)timecheck.tv_usec;
 #endif
 #ifdef PERF_EVAL
-    printf("[Host]  Total time for IVFPQ searching: %.6lfs\n", std::max(dpuExecTime, hostExecTime + dataTransferhost2DPUTime + dataTransferDPU2hostTime) / 1e6);
-    printf("[Host]  Time for DPU execution: %.6lfs, host execution: %.6lfs, data transfer host2DPU: %.6lfs, data transfer DPU2host: %.6lfs\n", dpuExecTime / 1e6, hostExecTime / 1e6, dataTransferhost2DPUTime / 1e6, dataTransferDPU2hostTime / 1e6);
-    printf("[Host]  Time for data preparing Phase: %.6lfs\n", prepareTime / 1e6);
+    printf("[Host]  Total time for query searching: %.6lfs\n", std::max(dpuExecTime, hostExecTime + dataTransferhost2DPUTime + dataTransferDPU2hostTime) / 1e6);
+    // printf("[Host]  Time for DPU execution: %.6lfs, host execution: %.6lfs, data transfer host2DPU: %.6lfs, data transfer DPU2host: %.6lfs\n", dpuExecTime / 1e6, hostExecTime / 1e6, dataTransferhost2DPUTime / 1e6, dataTransferDPU2hostTime / 1e6);
+    // printf("[Host]  Time for data preparing Phase: %.6lfs\n", prepareTime / 1e6);
 #endif
 #ifdef MODULE_PERF_EVAL
     printf("DPU Summary:\n");
