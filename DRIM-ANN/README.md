@@ -8,7 +8,7 @@ To avoid dependency on faiss, this repo provides a version without faiss as well
 2. Input the extracting code: cv43
 3. Download the whole data folder and move it to the local folder.
 ## How to test
-Make sure that index & query data have been downloaded and placed in this folder.
+Make sure that index & query data have been downloaded and placed in this folder. Then execute the following commands:
 ```
 mv data/* ./
 rmdir data
