@@ -378,9 +378,9 @@ static void parse_args(int argc, char **argv, uint32_t *dimAmt, uint32_t *neighb
 }
 
 #ifdef CYCLE_PERF_EVAL
-static void allocated_and_compute(dpu::DpuSet &dpu_set, const uint32_t dimAmt, const uint32_t neighborAmt, const uint32_t sliceAmt, const uint32_t queryBatchSize, const ADDRTYPE nprobe, const uint32_t DPUGroupSize, const uint32_t clusterSliceSize, const uint64_t &frequency, const UINT64 *const latency, const char *const clustersFileName, const char *const queriesFileName, const char *const squareResFileName, const char *const centroidsFileName, const char *const codebookFileName, const char *const clusterSizesFileName, const char *const clusterLayoutFileName, const char *const radiiFileName, const char *const squareRootsFileName, const char *const knnFileName) {
+static void allocated_and_compute(dpu::DpuSet &dpu_set, const uint32_t dimAmt, const uint32_t neighborAmt, const uint32_t sliceAmt, const uint32_t queryBatchSize, const ADDRTYPE nprobe, const uint32_t DPUGroupSize, const uint32_t clusterSliceSize, const uint32_t nb_mram, const uint64_t &frequency, const UINT64 *const latency, const char *const clustersFileName, const char *const queriesFileName, const char *const squareResFileName, const char *const centroidsFileName, const char *const codebookFileName, const char *const clusterSizesFileName, const char *const clusterLayoutFileName, const char *const radiiFileName, const char *const squareRootsFileName, const char *const knnFileName) {
 #else
-static void allocated_and_compute(dpu::DpuSet &dpu_set, const uint32_t dimAmt, const uint32_t neighborAmt, const uint32_t sliceAmt, const uint32_t queryBatchSize, const ADDRTYPE nprobe, const uint32_t DPUGroupSize, const uint32_t clusterSliceSize, const UINT64 *const latency, const char *const clustersFileName, const char *const queriesFileName, const char *const squareResFileName, const char *const centroidsFileName, const char *const codebookFileName, const char *const clusterSizesFileName, const char *const clusterLayoutFileName, const char *const radiiFileName, const char *const squareRootsFileName, const char *const knnFileName) {
+static void allocated_and_compute(dpu::DpuSet &dpu_set, const uint32_t dimAmt, const uint32_t neighborAmt, const uint32_t sliceAmt, const uint32_t queryBatchSize, const ADDRTYPE nprobe, const uint32_t DPUGroupSize, const uint32_t clusterSliceSize, const uint32_t nb_mram, const UINT64 *const latency, const char *const clustersFileName, const char *const queriesFileName, const char *const squareResFileName, const char *const centroidsFileName, const char *const codebookFileName, const char *const clusterSizesFileName, const char *const clusterLayoutFileName, const char *const radiiFileName, const char *const squareRootsFileName, const char *const knnFileName) {
 #endif
 #ifdef ENERGY_EVAL
     double ESU = getEnergyUnit();
@@ -407,7 +407,7 @@ static void allocated_and_compute(dpu::DpuSet &dpu_set, const uint32_t dimAmt, c
 #endif
 
     uint32_t nr_ranks = dpu_set.ranks().size();
-    uint32_t nr_all_dpus = dpu_set.dpus().size();
+    uint32_t nr_all_dpus = std::min(static_cast<size_t>(nb_mram), dpu_set.dpus().size());
     std::vector<uint16_t> squareRes(1 << (sizeof(ELEMTYPE) << 3));
     load1DUint16sFromFile(squareResFileName, squareRes);
     const ADDRTYPE queryAmt = getPointsAmount(queriesFileName, dimAmt);
@@ -1050,9 +1050,9 @@ int main(int argc, char **argv) {
     /**************************************************************************************************** End of latenct definition ****************************************************************************************************/
 
 #ifdef CYCLE_PERF_EVAL
-    allocated_and_compute(dpu_set, dimAmt, neighborAmt, sliceAmt, queryBatchSize, nprobe, DPUGroupSize, clusterSliceSize, frequency, latency, clustersFileName.c_str(), queriesFileName.c_str(), squareResFileName.c_str(), centroidsFileName.c_str(), codebookFileName.c_str(), clusterSizesFileName.c_str(), clusterLayoutFileName.c_str(), radiiFileName.c_str(), squareRootsFileName.c_str(), knnFileName.c_str());
+    allocated_and_compute(dpu_set, dimAmt, neighborAmt, sliceAmt, queryBatchSize, nprobe, DPUGroupSize, clusterSliceSize, nb_mram, frequency, latency, clustersFileName.c_str(), queriesFileName.c_str(), squareResFileName.c_str(), centroidsFileName.c_str(), codebookFileName.c_str(), clusterSizesFileName.c_str(), clusterLayoutFileName.c_str(), radiiFileName.c_str(), squareRootsFileName.c_str(), knnFileName.c_str());
 #else
-    allocated_and_compute(dpu_set, dimAmt, neighborAmt, sliceAmt, queryBatchSize, nprobe, DPUGroupSize, clusterSliceSize, latency, clustersFileName.c_str(), queriesFileName.c_str(), squareResFileName.c_str(), centroidsFileName.c_str(), codebookFileName.c_str(), clusterSizesFileName.c_str(), clusterLayoutFileName.c_str(), radiiFileName.c_str(), squareRootsFileName.c_str(), knnFileName.c_str());
+    allocated_and_compute(dpu_set, dimAmt, neighborAmt, sliceAmt, queryBatchSize, nprobe, DPUGroupSize, clusterSliceSize, nb_mram, latency, clustersFileName.c_str(), queriesFileName.c_str(), squareResFileName.c_str(), centroidsFileName.c_str(), codebookFileName.c_str(), clusterSizesFileName.c_str(), clusterLayoutFileName.c_str(), radiiFileName.c_str(), squareRootsFileName.c_str(), knnFileName.c_str());
 #endif
 
 return 0;
