@@ -13,8 +13,7 @@ Make sure that index & query data have been downloaded and placed in this folder
 mv data/* ./
 rmdir data
 mkdir build
-mkdir ckpts
-mkdir ckpts/SIFT100M
+mkdir -p ckpts/SIFT100M
 mkdir ckpts/DEEP100M
 make run
 ```
