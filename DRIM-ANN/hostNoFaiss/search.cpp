@@ -1028,7 +1028,7 @@ int main(int argc, char **argv) {
     printf("Allocating DPUs\n");
     dpu::DpuSet dpu_set = dpu::DpuSet::allocate(nb_mram, ("nrJobPerRank=" + std::to_string(NR_JOB_PER_RANK) + ",dispatchOnAllRanks=true,cycleAccurate=true"));
     printf("DPUs allocated\n");
-    printf("Using %u MRAMs already loaded\n", nb_mram);
+    printf("Using %u MRAMs already loaded\n", nb_mram != DPU_ALLOCATE_ALL ? nb_mram : static_cast<uint32_t>(dpu_set.dpus().size()));
 #ifdef CYCLE_PERF_EVAL
     printf("Config: dimAmt = %u, neighborAmt = %u, sliceAmt = %u, queryBatchSize = %u, nprobe = %u, DPUGroupSize = %u, clusterSliceSize = %u, pruneSliceAmt = %u, nb_mram = %u, nr_tasklets = %u, frequency = %lu, clustersFileName = %s, queriesFileName = %s, squareResFileName = %s, centroidsFileName = %s, codebookFileName = %s, clusterSizesFileName = %s, clusterLayoutFileName = %s, radiiFileName = %s, squareRootsFileName = %s, knnFileName = %s\n", dimAmt, neighborAmt, sliceAmt, queryBatchSize, nprobe, DPUGroupSize, clusterSliceSize, PRUNE_SLICE_AMT, nb_mram, NR_TASKLETS, frequency, clustersFileName.c_str(), queriesFileName.c_str(), squareResFileName.c_str(), centroidsFileName.c_str(), codebookFileName.c_str(), clusterSizesFileName.c_str(), clusterLayoutFileName.c_str(), radiiFileName.c_str(), squareRootsFileName.c_str(), knnFileName.c_str());
 #else
