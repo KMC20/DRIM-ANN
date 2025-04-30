@@ -47,9 +47,9 @@ def performance_model(N, D, K, P, C, M, CB, Q, P_dpu, F, PE, BW, BW_device):
     IO = {}
     IO_W = {}
     IO_M = {}
-    CP["CL"] = Q * ceil(N / C) * (3 * ceil(D * BitWidth["q"] * 2 / 512) - 1 + log(P) - 1)  # ceil(D * BitWidth["q"] * 2 / 512): AVX512 for vector processing
+    CP["CL"] = Q * ceil(N / C) * (3 * ceil(D * BitWidth["q"] * 2 * 8 / 512) - 1 + log(P) - 1)  # ceil(D * BitWidth["q"] * 2 * 8 / 512): AVX512 for vector processing
     IO["CL"] = Q * ceil(N / C) * ((BitWidth["c"] + BitWidth["q"]) * D + (BitWidth["q"] * 4 + BitWidth["a"]) * (log(P) + 1))  # Not struct, non-alignment
-    CP["CL"] += Q * ceil(N / C) * (2 * ceil(D * BitWidth["q"] * 2 / 512)  + (log(P) + 1))  # Cache loading instructions
+    CP["CL"] += Q * ceil(N / C) * (2 * ceil(D * BitWidth["q"] * 2 * 8 / 512)  + (log(P) + 1))  # Cache loading instructions
     P = P_dpu  # The following phases are completed on DPUs
     CP["RC"] = Q * P * D
     IO["RC"] = (BitWidth["c"] + BitWidth["q"]) * Q * P * D
