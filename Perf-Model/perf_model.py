@@ -132,7 +132,7 @@ if __name__ == '__main__':
         'DC': args.dpu_amount * 1024 * 1024 * 1024,
         'TS': args.dpu_amount * 1024 * 1024 * 1024
     }  # Unit: B/s
-    BW_device = {  # The reproduced bandwidth of DRAM-PIMs according to the official benchmarks are different from the theoretical one. The former is used here
+    BW_device = {  # The reproduced bandwidth of DRAM-PIMs according to the official benchmarks is different from the theoretical one. The former is used here
         'DDR4': 19.2 * 1024 * 1024 * 1024,
         'WRAM': args.dpu_amount * 1612.56 * 1024 * 1024 / RANDOM_MEM_COEFFICIENT,  # Random accesses take the major part. The coeffcient comes from the official benchmark
         'MRAM': args.dpu_amount * 573.79 * 1024 * 1024
