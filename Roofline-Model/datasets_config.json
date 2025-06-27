@@ -1,0 +1,62 @@
+{
+    "SIFT1B": {
+        "dim": 128,
+        "nlist": 8192,
+        "nprobe": 32,
+        "M": 32,
+        "query_batch_size": 10000,
+        "K": 10,
+        "N": 1000000000,
+        "CB": 256
+    },
+    "DEEP1B": {
+        "dim": 96,
+        "nlist": 8192,
+        "nprobe": 32,
+        "M": 32,
+        "query_batch_size": 10000,
+        "K": 10,
+        "N": 1000000000,
+        "CB": 256
+    },
+    "SPACEV1B": {
+        "dim": 100,
+        "nlist": 8192,
+        "nprobe": 32,
+        "M": 32,
+        "query_batch_size": 10000,
+        "K": 10,
+        "N": 1000000000,
+        "CB": 256
+    },
+    "T2I1B": {
+        "dim": 200,
+        "nlist": 8192,
+        "nprobe": 32,
+        "M": 32,
+        "query_batch_size": 10000,
+        "K": 10,
+        "N": 1000000000,
+        "CB": 256
+    },
+    "SIFT100M": {
+        "dim": 128,
+        "nlist": 8192,
+        "nprobe": 32,
+        "M": 32,
+        "query_batch_size": 10000,
+        "K": 10,
+        "N": 100000000,
+        "CB": 256
+    },
+    "DEEP100M": {
+        "dim": 96,
+        "nlist": 8192,
+        "nprobe": 32,
+        "M": 32,
+        "query_batch_size": 10000,
+        "K": 10,
+        "N": 100000000,
+        "CB": 256
+    }
+}
