@@ -19,13 +19,13 @@ def roofline_model_datasets(**kwargs) -> dict:
     '''
     arithmetic_intensity = {}
     for name, config in kwargs.items():
-        C_CL = config['query_batch_size'] *config['N'] / config['nlist'] * (3 * config['dim'] / 16 - 2 + log2(config['nprobe']))  # 16: AVX512 for vector processing (512bit / 8bit / sizeof(float))
+        C_CL = config['query_batch_size'] *config['N'] / config['nlist'] * (3 * config['dim'] / 512 - 2 + log2(config['nprobe']))
         IO_CL = config['dim'] * config['query_batch_size'] * 4 + config['N'] / config['nlist'] * (config['dim'] * 8)
-        C_RC = config['query_batch_size'] * config['nprobe'] * config['dim'] / 16  # 16: AVX512 for vector processing (512bit / 8bit / sizeof(float))
+        C_RC = config['query_batch_size'] * config['nprobe'] * config['dim'] / 512
         IO_RC = (config['query_batch_size'] + config['nprobe'] ) * config['dim'] * 4
-        C_LC = config['query_batch_size'] * config['nprobe'] * config['CB'] * config['dim'] * (3 * config['M'] - 1) / config['M'] / 16  # 16: AVX512 for vector processing (512bit / 8bit / sizeof(float))
+        C_LC = config['query_batch_size'] * config['nprobe'] * config['CB'] * config['dim'] * (3 * config['M'] - 1) / config['M'] / 512
         IO_LC = (4 + config['M'] * config['CB'] * 4)* config['query_batch_size'] * config['nprobe'] + config['dim'] * config['CB'] * 4
-        C_DC = config['query_batch_size'] * config['nprobe'] * config['nlist'] * (config['M'] - 1) / 16  # 16: AVX512 for vector processing (512bit / 8bit / sizeof(float))
+        C_DC = config['query_batch_size'] * config['nprobe'] * config['nlist'] * (config['M'] - 1) / 512
         IO_DC = min(config['N'] , config['query_batch_size'] * config['nprobe'] * (config['nlist'] * (config['M'] * 4 + 4) + config['M'] * config['CB'] * 4))
         C_TS = config['query_batch_size'] * config['nprobe'] * config['nlist'] * (log2(config['K']) - 1)
         IO_TS = config['query_batch_size'] * config['nprobe'] * (log2(config['K']) + 1) * 8
