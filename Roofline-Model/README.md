@@ -5,7 +5,7 @@ A roofline model of ANNS on various platforms with several datasets.
 python roofline_model.py --datasets-config-file-name config/datasets.json --platforms-config-file-name config/platforms.json --result-excel-file-name result/result.xls --result-plot-file-name result/result.png
 ```
 ## How to check the results
-Check the generated png and excel files in the `result` folder. Please refer to Section2.1 of the SC2025 paper for more details.
+Check the generated png and excel files in the `result` folder. Please refer to Section2.1 of the SC2025 article for more details.
 ## Reference
 If you feel this repo is useful for you, don't hesitate to star this!😀 And it is really kind of you to cite this repo in your paper or project.
 
