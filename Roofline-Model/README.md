@@ -1,5 +1,5 @@
 # Roofline model
-A roofline model of ANNS on various platforms with several datasets. (The files are going to be public later after arrangement.)
+A roofline model of ANNS on various platforms with several datasets.
 ## How to test
 ```
 python roofline_model.py --datasets-config-file-name config/datasets.json --platforms-config-file-name config/platforms.json --result-excel-file-name result/result.xls --result-plot-file-name result/result.png
