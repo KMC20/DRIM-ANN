@@ -109,10 +109,10 @@ inline VECSUMTYPE distCalSubVec(const RESIDUAL_TYPE *const vec1, const CB_TYPE *
 VECSUMTYPE *constrLUT_partDis;
 fsb_allocator_t constrLUT_partDisAllocator;
 MUTEX_INIT(mutex_prune_constrLUT);
-void constrLUT(const RESIDUAL_TYPE *const vec1, const __mram_ptr CB_TYPE *const codebook, VECSUMTYPE *LUT, const uint16_t maxSvDimAmt, const uint16_t dimAmt, const uint32_t savedPruneSliceAmt, const ADDRTYPE codebookEntryAmt, CB_TYPE *CBSliceBuf, const uint16_t CB_SLICE_BUF_SIZE, const uint16_t *const squareRes, const uint16_t PARA_CB_SLICE_INC) {
+void constrLUT(const RESIDUAL_TYPE *const vec1, const __mram_ptr CB_TYPE *const codebook, VECSUMTYPE *LUT, const uint16_t maxSvDimAmt, const uint16_t paddedSvDimAmt, const uint16_t dimAmt, const uint32_t savedPruneSliceAmt, const ADDRTYPE codebookEntryAmt, CB_TYPE *CBSliceBuf, const uint16_t CB_SLICE_BUF_SIZE, const uint16_t *const squareRes, const uint16_t PARA_CB_SLICE_INC) {
     uint16_t sliceEnd;
     RESIDUAL_TYPE *vec1Slice = (RESIDUAL_TYPE *)vec1;
-    __mram_ptr CB_TYPE *CBIter = (__mram_ptr CB_TYPE *)codebook + me() * maxSvDimAmt;
+    __mram_ptr CB_TYPE *CBIter = (__mram_ptr CB_TYPE *)codebook + me() * paddedSvDimAmt;
     VECSUMTYPE *LUTIter = LUT + me();
     uint16_t svDimAmt = maxSvDimAmt;
     uint16_t sliceSize = CB_SLICE_BUF_SIZE;
@@ -135,11 +135,11 @@ void constrLUT(const RESIDUAL_TYPE *const vec1, const __mram_ptr CB_TYPE *const 
         if (codebookEntryCnt > codebookEntryCntEnd) {  // The last loop is a bubble
             ADDRTYPE bubbleSize = codebookEntryCnt - codebookEntryCntEnd;
             LUTIter -= bubbleSize;
-            CBIter -= svDimAmt * bubbleSize;
+            CBIter -= paddedSvDimAmt * bubbleSize;
         } else {  // The last loop is a real execution
             ADDRTYPE bubbleSize = codebookEntryCntEnd - codebookEntryCnt;
             LUTIter += bubbleSize;
-            CBIter += svDimAmt * bubbleSize;
+            CBIter += paddedSvDimAmt * bubbleSize;
         }
         vec1Slice += svDimAmt;
     }
@@ -164,11 +164,11 @@ void constrLUT(const RESIDUAL_TYPE *const vec1, const __mram_ptr CB_TYPE *const 
         if (codebookEntryCnt > codebookEntryCntEnd) {  // The last loop is a bubble
             ADDRTYPE bubbleSize = codebookEntryCnt - codebookEntryCntEnd;
             LUTIter -= bubbleSize;
-            CBIter -= svDimAmt * bubbleSize;
+            CBIter -= paddedSvDimAmt * bubbleSize;
         } else {  // The last loop is a real execution
             ADDRTYPE bubbleSize = codebookEntryCntEnd - codebookEntryCnt;
             LUTIter += bubbleSize;
-            CBIter += svDimAmt * bubbleSize;
+            CBIter += paddedSvDimAmt * bubbleSize;
         }
         vec1Slice += svDimAmt;
     }
@@ -240,12 +240,18 @@ void clusterSearching(const __mram_ptr POINTTYPE *const points, const unsigned s
     const uint16_t querySize = sizeof(ELEMTYPE) * dimAmt;
     const uint16_t residualSize = sizeof(RESIDUAL_TYPE) * dimAmt;
     uint16_t CB_SLICE_BUF_SIZE = sizeof(CB_TYPE) * svDimAmt;
+    uint16_t PARA_CB_SLICE_INC = NR_TASKLETS;
+    uint16_t paddedSvDimAmt = svDimAmt;
     {  // Padding
         uint16_t CB_SLICE_BUF_SIZE_REMAIN = CB_SLICE_BUF_SIZE & 7;
-        if (CB_SLICE_BUF_SIZE_REMAIN != 0)
+        if (CB_SLICE_BUF_SIZE_REMAIN != 0) {
             CB_SLICE_BUF_SIZE += 8 - CB_SLICE_BUF_SIZE_REMAIN;
+            paddedSvDimAmt = CB_SLICE_BUF_SIZE / sizeof(CB_TYPE);
+            PARA_CB_SLICE_INC *= paddedSvDimAmt;
+        } else {
+            PARA_CB_SLICE_INC *= svDimAmt;
+        }
     }
-    const uint16_t PARA_CB_SLICE_INC = NR_TASKLETS * svDimAmt;
     fsb_allocator_t CBBufAllocator = fsb_alloc(CB_SLICE_BUF_SIZE, 1);
     __dma_aligned CB_TYPE *CBSliceBuf = fsb_get(CBBufAllocator);
     fsb_allocator_t curPointBufAllocator = fsb_alloc(pointSize, 1);
@@ -406,11 +412,11 @@ void clusterSearching(const __mram_ptr POINTTYPE *const points, const unsigned s
                     //     memset(constrLUT_partDis, 0xFF, PRUNE_SLICE_SIZE);
                     // }
                     barrier_wait(&barrier_tasklets);
-                    // constrLUT(residualBuf, codebook, lookUpTable, svDimAmt, dimAmt, savedPruneSliceAmt, codebookEntryAmt, CBSliceBuf, CB_SLICE_BUF_SIZE, squareRes, PARA_CB_SLICE_INC);
+                    // constrLUT(residualBuf, codebook, lookUpTable, svDimAmt, paddedSvDimAmt, dimAmt, savedPruneSliceAmt, codebookEntryAmt, CBSliceBuf, CB_SLICE_BUF_SIZE, squareRes, PARA_CB_SLICE_INC);
                     {  // constrLUT
                         uint16_t sliceEnd;
                         RESIDUAL_TYPE *vec1Slice = (RESIDUAL_TYPE *)residualBuf;
-                        __mram_ptr CB_TYPE *CBIter = (__mram_ptr CB_TYPE *)codebook + me() * svDimAmt;
+                        __mram_ptr CB_TYPE *CBIter = (__mram_ptr CB_TYPE *)codebook + me() * paddedSvDimAmt;
                         VECSUMTYPE *LUTIter = lookUpTable + me();
                         uint16_t localSvDimAmt = svDimAmt;
                         uint16_t sliceSize = CB_SLICE_BUF_SIZE;
@@ -483,11 +489,11 @@ void clusterSearching(const __mram_ptr POINTTYPE *const points, const unsigned s
                             if (codebookEntryCnt > codebookEntryCntEnd) {  // The last loop is a bubble
                                 ADDRTYPE bubbleSize = codebookEntryCnt - codebookEntryCntEnd;
                                 LUTIter -= bubbleSize;
-                                CBIter -= localSvDimAmt * bubbleSize;
+                                CBIter -= paddedSvDimAmt * bubbleSize;
                             } else {  // The last loop is really an execution
                                 ADDRTYPE bubbleSize = codebookEntryCntEnd - codebookEntryCnt;
                                 LUTIter += bubbleSize;
-                                CBIter += localSvDimAmt * bubbleSize;
+                                CBIter += paddedSvDimAmt * bubbleSize;
                             }
                             vec1Slice += localSvDimAmt;
                         }
@@ -512,11 +518,11 @@ void clusterSearching(const __mram_ptr POINTTYPE *const points, const unsigned s
                             if (codebookEntryCnt > codebookEntryCntEnd) {  // The last loop is a bubble
                                 ADDRTYPE bubbleSize = codebookEntryCnt - codebookEntryCntEnd;
                                 LUTIter -= bubbleSize;
-                                CBIter -= localSvDimAmt * bubbleSize;
+                                CBIter -= paddedSvDimAmt * bubbleSize;
                             } else {  // The last loop is a real execution
                                 ADDRTYPE bubbleSize = codebookEntryCntEnd - codebookEntryCnt;
                                 LUTIter += bubbleSize;
-                                CBIter += localSvDimAmt * bubbleSize;
+                                CBIter += paddedSvDimAmt * bubbleSize;
                             }
                             vec1Slice += localSvDimAmt;
                         }                    
