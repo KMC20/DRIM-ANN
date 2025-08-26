@@ -179,7 +179,7 @@ class coarseScheduler_pqType {
     }
     ~coarseScheduler_pqType() {}
 };
-#define NR_JOB_PER_RANK 20
+#define NR_JOB_PER_RANK 64
 // Note: the order of elements of the input `clusterDirectory[clusterId]` may be changed in this function!
 void coarseScheduler(const ADDRTYPE &clusterId, std::vector<std::vector<ClusterIndex>> &clusterDirectory, const std::vector<CLUSTER_SIZES_TYPE> &clusterSizesFlat, const float &pointAmtPerSlice, const std::vector<std::vector<ClusterLayout>>&clusterLayout, std::vector<ClusterLayout> &selDPUs, const std::vector<UINT64> &heatDPUs) {
     // Greedy assignment
