@@ -18,6 +18,7 @@ make run
 ## How to check the results
 Check the log and top-k neighbor files in the `build` and `ckpts` folders respectively. Please refer to the Appendix of Artifact Description/Artifact Evaluation of the SC2025 article for more details. For visualization, please use the python script `logVisual.py` like this and check throughput excel/bar-graph results in `Excels` and `Figures` folders respectively:
 ```
+mkdir Excels | mkdir Figures
 python logVisual.py --excel-dir-name Excels --diagram-dir-name Figures
 ```
 ## Thanks
