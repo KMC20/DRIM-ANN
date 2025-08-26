@@ -33,7 +33,7 @@ typedef uint64_t perfcounter_t;
 #define XSTR(x) #x
 #define STR(x) XSTR(x)
 
-#define NR_JOB_PER_RANK 64
+#define NR_JOB_PER_RANK 20
 #define NR_JOB_PARALLEL NR_JOB_PER_RANK
 
 #define dpu_binary_CBS "build/dpu_task_CBS"
@@ -496,8 +496,9 @@ static void allocated_and_compute(dpu::DpuSet &dpu_set, const uint32_t dimAmt, c
         ADDRTYPE pointSize = sizeof(POINTTYPE) * sliceAmt;
         pointAmtPerSlice = std::ceil(static_cast<float>(clusterSliceSize) / pointSize);
     }
-    const ADDRTYPE codebookEntryAmt = getElemsAmount(codebookFileName, dimAmt * sizeof(CB_TYPE));
-    std::vector<CB_TYPE> codebook(dimAmt * codebookEntryAmt);
+    const ADDRTYPE codebookPaddedDimAmt = std::ceil(std::ceil(static_cast<float>(dimAmt) / sliceAmt) / 8) * 8 * sliceAmt;
+    const ADDRTYPE codebookEntryAmt = getElemsAmount(codebookFileName, codebookPaddedDimAmt * sizeof(CB_TYPE));
+    std::vector<CB_TYPE> codebook(codebookPaddedDimAmt * codebookEntryAmt);
     load1DDataFromFile(codebookFileName, codebook);
     std::vector<std::vector<ADDRTYPE>> localClusterAddrs(nr_all_dpus);
     {  // Set clusterAddrs, load clusterSizes
