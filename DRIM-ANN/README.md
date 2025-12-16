@@ -1,7 +1,7 @@
 # DRIM-ANN
 ## Dependency
 * The faiss library: integrated to the cluster locating phase on CPU. Install by conda at: https://github.com/facebookresearch/faiss
-* UPMEM SDK: please refer to: https://sdk.upmem.com. In case that users have no access to real UPMEM server, UPMEM SDK provides a simulator for functional verification on CPU. Using the simulator with 64 DPUs allocated at most, please change the parameter `-U` in `Makefile` from `2543` to `64`.
+* UPMEM SDK: please refer to: https://sdk.upmem.com. In case that users have no access to real UPMEM servers, UPMEM SDK provides a simulator for functional verification on CPU. Using the simulator with 64 DPUs allocated at most, please change the parameter `-U` in `Makefile` from `2543` to `64`.
 
 To avoid dependency on faiss, this repo provides a version without faiss as well. You can try this by replacing the folder `host` by `hostNoFaiss`, and replacing `Makefile` by `Makefile.noFaiss`. This version supports hyperthreading and AVX2 by default, and you can change the use of `knn_L2sqr` into `knn_L2sqrAVX512` in `host/tools/src/tools.cpp` and the `CXXFLAGS` in `Makefile.noFaiss` into the annotated one if your machine supports AVX512. However, the implementation has not been deeply optimized, so it is 2~4 times slower than the faiss implementation, especially in cases that `nlist` is large.
 ## Index & query data
