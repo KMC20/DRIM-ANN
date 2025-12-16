@@ -1,6 +1,7 @@
 # DRIM-ANN
+An Approximate Nearest Neighbor Search Engine based on Commercial DRAM-PIMs.
 ## Framework
-Please refer to the `DRIM-ANN` directory. A README.md is attached to it for testing.
+Please refer to the `DRIM-ANN` directory. A README.md is attached to it for testing. Please install [UPMEM SDK](https://sdk.upmem.com) before testing. The SDK provides a simulator for functional verification on CPU in case that users have no access to real UPMEM server.
 ## Fine-grained performance model
 Please refer to the `Perf-Model` directory. A README.md is attached to it for testing.
 ## Reference
